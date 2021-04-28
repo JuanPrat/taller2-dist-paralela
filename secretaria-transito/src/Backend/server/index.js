@@ -19,6 +19,10 @@ server.get("/api/obtenerVehiculo/:placa", async (req, res)=>{
     return res.send({error: false, data:vehiculo})
 })
 
+server.post("/api/vehiculoConMatricula", async (reqBody, resBody) => {
+    
+})
+
 //ENDPOINTS INFRACCIONES
 server.get("/api/obtenerInfracciones", async (req, res) => {
     let infracciones = await Infracciones.find();
