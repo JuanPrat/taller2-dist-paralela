@@ -33,16 +33,9 @@ const Boton = styled.button`
   }
 `;
 
-const Error = styled.div`
-  background-color: red;
-  color: white;
-  padding: 1rem;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 2rem;
-`;
 
-const FormularioPropietarios = () => {
+const FormularioPropietarios = ({guardarInformacionPropietarios}) => {
+
   const [datos, guardarDatos] = useState({
     identificacion: "",
     nombre: "",
@@ -59,33 +52,29 @@ const FormularioPropietarios = () => {
     });
   };
 
-  const [error, guardarError] = useState(false);
 
   const agregarPropietario = (e) => {
     e.preventDefault();
 
-    if (
-      identificacion.trim() === "" ||
-      nombre.trim() === "" ||
-      direccion.trim() === "" ||
-      tipoPropietario.trim() === ""
-    ) {
-      guardarError(true);
-      return; //Para que no se siga ejecutando
-    }
+    guardarInformacionPropietarios(datos);
 
-    guardarError(false);
+    //Reiniciar el from
+    guardarDatos({
+      identificacion: "",
+      nombre: "",
+      direccion: "",
+      tipoPropietario: ""
+    })
   };
 
   return (
     <form onSubmit={agregarPropietario}>
-      {error ? <Error>Todos los campos son obligatorios</Error> : null}
-
+      
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Identificacion:</Label>
         <input
           className="col-3"
-          type="number"
+          type="text"
           name="identificacion"
           value={identificacion}
           onChange={obtenerInformacion}
