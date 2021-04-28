@@ -24,16 +24,16 @@ const ContenedorFormulario = styled.div`
 `;
 
 function App() {
+  let vehiculosIniciales = [];
 
-  const [ vehiculos, guardarVehiculos] = useState([]);
-
-  const guardarInformacionVehiculo = vehiculo => {
-    const arregloTemporal = vehiculos
-    arregloTemporal.push(vehiculo)
-    guardarVehiculos([
-      arregloTemporal
-    ]);
+  if (!vehiculosIniciales) {
+    vehiculosIniciales = [];
   }
+  const [vehiculos, guardarVehiculos] = useState(vehiculosIniciales);
+
+  const guardarInformacionVehiculo = (vehiculo) => {
+    guardarVehiculos([...vehiculos, vehiculo]);
+  };
   return (
     <Router>
       <Contenedor>
@@ -45,25 +45,35 @@ function App() {
           <Route path="/Vehiculos">
             <ContenedorFormulario>
               <FormularioVehiculos
-                guardarInformacionVehiculo = {guardarInformacionVehiculo}
+                guardarInformacionVehiculo={guardarInformacionVehiculo}
               />
             </ContenedorFormulario>
             <ContenedorFormulario>
-            {vehiculos.map(vehiculo => (
-              <Vehiculos
-                vehiculo = {vehiculo}
-              />
-            ))}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Fecha de matricula</th>
+                    <th scope="col">Propietario</th>
+                    <th scope="col">Tipo de vehiculo</th>
+                  </tr>
+                </thead>
+                {vehiculos.map((vehiculo) => (
+                  <Vehiculos vehiculo={vehiculo} />
+                ))}
+              </table>
             </ContenedorFormulario>
           </Route>
           <Route path="/Infracciones">
             <ContenedorFormulario>
-              <FormularioInfracciones/>
+              <FormularioInfracciones />
             </ContenedorFormulario>
           </Route>
           <Route path="/Propietarios">
             <ContenedorFormulario>
-              <FormularioPropietarios/>
+              <FormularioPropietarios />
             </ContenedorFormulario>
           </Route>
         </Switch>
