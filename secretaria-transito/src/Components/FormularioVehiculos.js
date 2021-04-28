@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+//import server from "../Backend/server/index.js";
 
 const Campo = styled.div`
   display: flex;
@@ -33,25 +34,13 @@ const Boton = styled.button`
   }
 `;
 
-const Error = styled.div`
-  background-color: red;
-  color: white;
-  padding: 1rem;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 2rem;
-`;
 
-const FormularioVehiculos = () => {
+const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
 
-  const [datos, guardarDatos] = useState({
-    placa: '',
-    marca: '',
-    fecha: '',
-    propietario: '',
-    tipoVehiculo: '',
-  });
+  const [datos, guardarDatos] = useState({});
 
+
+  
   const { placa, marca, fecha, propietario, tipoVehiculo } = datos;
 
   const obtenerInformacion = (e) => {
@@ -61,29 +50,24 @@ const FormularioVehiculos = () => {
     });
   };
 
-  const [error, guardarError] = useState(false);
-
   const agregarVehiculo = (e) => {
     e.preventDefault();
 
-    if (
-      placa.trim() === "" ||      marca.trim() === "" ||
-      fecha.trim() === "" ||
-      propietario.trim() === "" ||
-      tipoVehiculo.trim() === ""
-    ) {
-      guardarError(true);
-      return; //Para que no se siga ejecutando
-    }
+    guardarInformacionVehiculo(datos);
 
-    guardarError(false);
+    //Reiniciar el from
+    guardarDatos({
+      placa: '',
+      marca: '',
+      fecha: '',
+      propietario: '',
+      tipoVehiculo: ''
+    })
   };
 
   return (
 
     <form onSubmit={agregarVehiculo}>
-
-      {error ? <Error>Todos los campos son obligatorios</Error> : null}
 
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Placa:</Label>

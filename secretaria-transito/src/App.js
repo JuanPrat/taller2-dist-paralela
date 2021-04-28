@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Components/Header";
+import Vehiculos from "./Components/Vehiculos";
+//import Infracciones from "./Components/Infracciones";
+//import Propietarios from "./Components/Propietarios";
 import FormularioVehiculos from "./Components/FormularioVehiculos";
 import FormularioInfracciones from "./Components/FormularioInfracciones";
 import FormularioPropietarios from "./Components/FormularioPropietarios";
@@ -21,6 +24,16 @@ const ContenedorFormulario = styled.div`
 `;
 
 function App() {
+
+  const [ vehiculos, guardarVehiculos] = useState([]);
+
+  const guardarInformacionVehiculo = vehiculo => {
+    const arregloTemporal = vehiculos
+    arregloTemporal.push(vehiculo)
+    guardarVehiculos([
+      arregloTemporal
+    ]);
+  }
   return (
     <Router>
       <Contenedor>
@@ -31,7 +44,16 @@ function App() {
         <Switch>
           <Route path="/Vehiculos">
             <ContenedorFormulario>
-              <FormularioVehiculos/>
+              <FormularioVehiculos
+                guardarInformacionVehiculo = {guardarInformacionVehiculo}
+              />
+            </ContenedorFormulario>
+            <ContenedorFormulario>
+            {vehiculos.map(vehiculo => (
+              <Vehiculos
+                vehiculo = {vehiculo}
+              />
+            ))}
             </ContenedorFormulario>
           </Route>
           <Route path="/Infracciones">
