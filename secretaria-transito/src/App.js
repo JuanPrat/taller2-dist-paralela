@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Header from "./Components/Header";
 import Vehiculos from "./Components/Vehiculos";
-//import Infracciones from "./Components/Infracciones";
-//import Propietarios from "./Components/Propietarios";
+import Infracciones from "./Components/Infracciones";
+import Propietarios from "./Components/Propietarios";
 import FormularioVehiculos from "./Components/FormularioVehiculos";
 import FormularioInfracciones from "./Components/FormularioInfracciones";
 import FormularioPropietarios from "./Components/FormularioPropietarios";
@@ -24,16 +24,35 @@ const ContenedorFormulario = styled.div`
 `;
 
 function App() {
+  let vehiculosIniciales = [];
+  let infraccionesIniciales = [];
+  let propietariosIniciales = [];
 
-  const [ vehiculos, guardarVehiculos] = useState([]);
-
-  const guardarInformacionVehiculo = vehiculo => {
-    const arregloTemporal = vehiculos
-    arregloTemporal.push(vehiculo)
-    guardarVehiculos([
-      arregloTemporal
-    ]);
+  if (!vehiculosIniciales) {
+    vehiculosIniciales = [];    
   }
+  if (!infraccionesIniciales){
+    infraccionesIniciales = [];
+  }
+  if (!propietariosIniciales){
+    propietariosIniciales = [];
+  }
+
+  const [vehiculos, guardarVehiculos] = useState(vehiculosIniciales);
+  const [infracciones, guardarInfracciones] = useState(infraccionesIniciales);
+  const [propietarios, guardarPropietarios] = useState(propietariosIniciales);
+
+  const guardarInformacionVehiculo = (vehiculo) => {
+    guardarVehiculos([...vehiculos, vehiculo]);
+  };
+  const guardarInformacionInfracciones = (infraccion) => {
+    guardarInfracciones([...infracciones, infraccion]);
+  };
+  const guardarInformacionPropietarios = (propietario) => {
+    guardarPropietarios([...propietarios, propietario]);
+  };
+
+
   return (
     <Router>
       <Contenedor>
@@ -45,25 +64,35 @@ function App() {
           <Route path="/Vehiculos">
             <ContenedorFormulario>
               <FormularioVehiculos
-                guardarInformacionVehiculo = {guardarInformacionVehiculo}
+                guardarInformacionVehiculo={guardarInformacionVehiculo}
               />
             </ContenedorFormulario>
+
             <ContenedorFormulario>
-            {vehiculos.map(vehiculo => (
-              <Vehiculos
-                vehiculo = {vehiculo}
-              />
-            ))}
+              <Vehiculos vehiculos={vehiculos} />
             </ContenedorFormulario>
           </Route>
+
           <Route path="/Infracciones">
             <ContenedorFormulario>
-              <FormularioInfracciones/>
+              <FormularioInfracciones 
+               guardarInformacionInfracciones={guardarInformacionInfracciones}/>
             </ContenedorFormulario>
+            
+            <ContenedorFormulario>
+              <Infracciones infracciones={infracciones} />
+            </ContenedorFormulario>
+
           </Route>
+
           <Route path="/Propietarios">
             <ContenedorFormulario>
-              <FormularioPropietarios/>
+              <FormularioPropietarios 
+                guardarInformacionPropietarios={guardarInformacionPropietarios}/>
+            </ContenedorFormulario>
+
+            <ContenedorFormulario>
+              <Propietarios propietarios={propietarios} />
             </ContenedorFormulario>
           </Route>
         </Switch>

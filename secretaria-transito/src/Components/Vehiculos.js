@@ -1,7 +1,6 @@
 import React from "react";
 
-const Vehiculos = ({ vehiculo }) => {
-  console.log(vehiculo)
+const Vehiculos = ({ vehiculos }) => {
   return (
     <table class="table table-striped">
       <thead>
@@ -14,15 +13,18 @@ const Vehiculos = ({ vehiculo }) => {
           <th scope="col">Tipo de vehiculo</th>
         </tr>
       </thead>
+
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>{vehiculo.placa}</td>
-          <td>{vehiculo.marca}</td>
-          <td>{vehiculo.fecha}</td>
-          <td>{vehiculo.propietario}</td>
-          <td>{vehiculo.tipoVehiculo}</td>
-        </tr>
+        {vehiculos.map((vehiculo) => (
+          <tr>
+            <th scope="row">1</th>
+            <td>{vehiculo.placa}</td>
+            <td>{vehiculo.marca}</td>
+            <td>{vehiculo.fecha}</td>
+            <td>{vehiculo.propietario}</td>
+            <td>{vehiculo.tipoVehiculo}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

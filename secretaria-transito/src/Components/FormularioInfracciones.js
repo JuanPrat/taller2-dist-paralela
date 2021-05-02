@@ -33,16 +33,8 @@ const Boton = styled.button`
   }
 `;
 
-const Error = styled.div`
-  background-color: red;
-  color: white;
-  padding: 1rem;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 2rem;
-`;
+const FormularioInfracciones = ({guardarInformacionInfracciones}) => {
 
-const FormularioInfracciones = () => {
   const [datos, guardarDatos] = useState({
     fechaInfraccion: "",
     placaDelVehiculo: "",
@@ -66,28 +58,26 @@ const FormularioInfracciones = () => {
     });
   };
 
-  const [error, guardarError] = useState(false);
+  
 
   const agregarInfraccion = (e) => {
     e.preventDefault();
 
-    if (
-      fechaInfraccion.trim() === "" ||
-      placaDelVehiculo.trim() === "" ||
-      identificacionPropietario.trim() === "" || descripcionCorta.trim() === "" ||
-      tipoAgente.trim() === ""
-    ) {
-      guardarError(true);
-      return; //Para que no se siga ejecutando
-    }
-
-    guardarError(false);
+    guardarInformacionInfracciones(datos);
+    
+    //Reiniciar el from
+    guardarDatos({
+      fechaInfraccion: "",
+    placaDelVehiculo: "",
+    identificacionPropietario: "",
+    descripcionCorta:"",
+    tipoAgente: ""
+    })
   };
 
   return (
     <form onSubmit={agregarInfraccion}>
-      {error ? <Error>Todos los campos son obligatorios</Error> : null}
-
+      
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Fecha de infraccion:</Label>
         <input
@@ -111,7 +101,7 @@ const FormularioInfracciones = () => {
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Identificacion del propietario:</Label>
         <input className="col-3"
-          type="number"
+          type="text"
           name="identificacionPropietario"
           value={identificacionPropietario}
           onChange={obtenerInformacion}
