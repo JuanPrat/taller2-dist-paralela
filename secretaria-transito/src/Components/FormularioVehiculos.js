@@ -36,9 +36,7 @@ const Boton = styled.button`
 
 
 const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
-<<<<<<< HEAD
-  const [datos, guardarDatos] = useState([]);
-=======
+
 
   const [datos, guardarDatos] = useState({
       placa: '',
@@ -48,9 +46,6 @@ const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
       tipoVehiculo: ''
   });
 
-
-  
->>>>>>> ff865b2ad51c8eb85864ced431bd601d56f9268e
   const { placa, marca, fecha, propietario, tipoVehiculo } = datos;
 
   const obtenerInformacion = (e) => {
