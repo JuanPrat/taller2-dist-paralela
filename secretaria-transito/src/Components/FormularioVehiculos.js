@@ -36,11 +36,7 @@ const Boton = styled.button`
 
 
 const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
-
-  const [datos, guardarDatos] = useState({});
-
-
-  
+  const [datos, guardarDatos] = useState([]);
   const { placa, marca, fecha, propietario, tipoVehiculo } = datos;
 
   const obtenerInformacion = (e) => {
@@ -52,17 +48,8 @@ const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
 
   const agregarVehiculo = (e) => {
     e.preventDefault();
-
+    debugger
     guardarInformacionVehiculo(datos);
-
-    //Reiniciar el from
-    guardarDatos({
-      placa: '',
-      marca: '',
-      fecha: '',
-      propietario: '',
-      tipoVehiculo: ''
-    })
   };
 
   return (
