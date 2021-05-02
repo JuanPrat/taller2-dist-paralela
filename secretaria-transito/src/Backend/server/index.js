@@ -1,7 +1,7 @@
 const express = require('express');
 const server = express();
 const cors = require('cors')
-const { Vehiculos, Infracciones, Propietarios } = require('../models/')
+const { Vehiculos, Infracciones, Propietarios, Matriculas } = require('../models/')
 
 server.use(express.json());
 server.use(cors());
@@ -71,5 +71,27 @@ server.post("/api/guardarPropietario/", async (req, res) => {
     return res.send({ data: propietarioGuardado })
 })
 
+//ENDPOINTS MATRICULAS
+server.get("/api/obtenerMatriculas", async (req, res) => {
+    let matriculas = await Matriculas.find()
+    return res.send({ data: matriculas })
+})
+
+server.get("/api/obtenerMatricula/:id", async (req, res) => {
+    const { id } = req.params;
+    let matricula = await Matriculas.find({ id: { $regex: new RegExp(id, "i") } })
+    return res.send({ data: matricula })
+})
+
+server.post("/api/guardarMatricula/", async (req, res) => {
+    const { placa, marca, fechaMatricula, propietario } = req.body
+    let matriculaGuardada = await Matriculas.create({
+        placa: placa,
+        marca: marca,
+        fechaMatricula: fechaMatricula,
+        propietario: propietario
+    })
+    return res.send({ data: matriculaGuardada })
+})
 module.exports = server;
 
