@@ -1,15 +1,23 @@
 import React from "react";
+import {useEffect} from 'react'
+import logic from '../Backend/logic/logic'
 
-const Infracciones = ({ infracciones }) => {
+
+
+const Infracciones = ({ infracciones, guardarInfracciones }) => {
+
+  useEffect(()=>{
+    logic.consultarInfracciones()
+        .then(res => res.json())
+        .then(res => guardarInfracciones(res.data))
+  })
+  
   return (
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Fecha de infraccion</th>
           <th scope="col">Placa vehiculo</th>
-          <th scope="col">Identificacion del propietario</th>
-          <th scope="col">Descripcion corta</th>
           <th scope="col">Tipo agente</th>
         </tr>
       </thead>
@@ -17,11 +25,8 @@ const Infracciones = ({ infracciones }) => {
       <tbody>
         {infracciones.map((infracciones) => (
           <tr>
-            <th scope="row">1</th>
-            <td>{infracciones.fechaInfraccion}</td>
-            <td>{infracciones.placaDelVehiculo}</td>
-            <td>{infracciones.identificacionPropietario}</td>
-            <td>{infracciones.descripcionCorta}</td>
+            <td>{infracciones.fecha}</td>
+            <td>{infracciones.placa}</td>
             <td>{infracciones.tipoAgente}</td>
           </tr>
         ))}

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import logic from '../Backend/logic/logic';
 
-const Vehiculos = ({ vehiculos }) => {
+const Vehiculos = ({ vehiculos, guardarVehiculos }) => {
+
+  useEffect(() => {
+    logic.consultarVehiculos()
+      .then(res => res.json())
+      .then(res => guardarVehiculos(res.data))
+  })
+
   return (
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Placa</th>
           <th scope="col">Marca</th>
           <th scope="col">Fecha de matricula</th>
@@ -17,10 +24,9 @@ const Vehiculos = ({ vehiculos }) => {
       <tbody>
         {vehiculos.map((vehiculo) => (
           <tr>
-            <th scope="row">1</th>
             <td>{vehiculo.placa}</td>
             <td>{vehiculo.marca}</td>
-            <td>{vehiculo.fecha}</td>
+            <td>{vehiculo.fechaMatricula}</td>
             <td>{vehiculo.propietario}</td>
             <td>{vehiculo.tipoVehiculo}</td>
           </tr>
@@ -28,6 +34,6 @@ const Vehiculos = ({ vehiculos }) => {
       </tbody>
     </table>
   );
-};
+}
 
 export default Vehiculos;

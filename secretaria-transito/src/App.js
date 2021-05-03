@@ -10,6 +10,7 @@ import Navegacion from "./Components/Navegacion";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "@emotion/styled";
 import "bootstrap/dist/css/bootstrap.min.css";
+import logic from './Backend/logic/logic'
 
 //styled component
 
@@ -29,12 +30,12 @@ function App() {
   let propietariosIniciales = [];
 
   if (!vehiculosIniciales) {
-    vehiculosIniciales = [];    
+    vehiculosIniciales = [];
   }
-  if (!infraccionesIniciales){
+  if (!infraccionesIniciales) {
     infraccionesIniciales = [];
   }
-  if (!propietariosIniciales){
+  if (!propietariosIniciales) {
     propietariosIniciales = [];
   }
 
@@ -42,16 +43,18 @@ function App() {
   const [infracciones, guardarInfracciones] = useState(infraccionesIniciales);
   const [propietarios, guardarPropietarios] = useState(propietariosIniciales);
 
-  const guardarInformacionVehiculo = (vehiculo) => {
-    guardarVehiculos([...vehiculos, vehiculo]);
+  const guardarInformacionVehiculo = (vehiculoData_matriculaData) => {
+    logic.guardarVehiculo(vehiculoData_matriculaData)
+    guardarVehiculos([])
   };
   const guardarInformacionInfracciones = (infraccion) => {
-    guardarInfracciones([...infracciones, infraccion]);
+    logic.guardarInfraccion({ infraccion })
+    guardarInfracciones([])
   };
   const guardarInformacionPropietarios = (propietario) => {
-    guardarPropietarios([...propietarios, propietario]);
+    logic.guardarPropietario(propietario)
+    guardarPropietarios([])
   };
-
 
   return (
     <Router>
@@ -69,30 +72,30 @@ function App() {
             </ContenedorFormulario>
 
             <ContenedorFormulario>
-              <Vehiculos vehiculos={vehiculos} />
+              <Vehiculos vehiculos={vehiculos} guardarVehiculos={guardarVehiculos} />
             </ContenedorFormulario>
           </Route>
 
           <Route path="/Infracciones">
             <ContenedorFormulario>
-              <FormularioInfracciones 
-               guardarInformacionInfracciones={guardarInformacionInfracciones}/>
+              <FormularioInfracciones
+                guardarInformacionInfracciones={guardarInformacionInfracciones} />
             </ContenedorFormulario>
-            
+
             <ContenedorFormulario>
-              <Infracciones infracciones={infracciones} />
+              <Infracciones infracciones={infracciones} guardarInfracciones={guardarInfracciones} />
             </ContenedorFormulario>
 
           </Route>
 
           <Route path="/Propietarios">
             <ContenedorFormulario>
-              <FormularioPropietarios 
-                guardarInformacionPropietarios={guardarInformacionPropietarios}/>
+              <FormularioPropietarios
+                guardarInformacionPropietarios={guardarInformacionPropietarios} />
             </ContenedorFormulario>
 
             <ContenedorFormulario>
-              <Propietarios propietarios={propietarios} />
+              <Propietarios propietarios={propietarios} guardarPropietarios={guardarPropietarios} />
             </ContenedorFormulario>
           </Route>
         </Switch>

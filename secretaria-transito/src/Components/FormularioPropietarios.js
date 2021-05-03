@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
 const Campo = styled.div`
@@ -33,17 +33,15 @@ const Boton = styled.button`
   }
 `;
 
-
 const FormularioPropietarios = ({guardarInformacionPropietarios}) => {
-
   const [datos, guardarDatos] = useState({
     identificacion: "",
     nombre: "",
     direccion: "",
-    tipoPropietario: "",
+    naturaleza: "",
   });
 
-  const { identificacion, nombre, direccion, tipoPropietario } = datos;
+  const { identificacion, nombre, direccion, naturaleza } = datos;
 
   const obtenerInformacion = (e) => {
     guardarDatos({
@@ -51,7 +49,6 @@ const FormularioPropietarios = ({guardarInformacionPropietarios}) => {
       [e.target.name]: e.target.value,
     });
   };
-
 
   const agregarPropietario = (e) => {
     e.preventDefault();
@@ -63,13 +60,12 @@ const FormularioPropietarios = ({guardarInformacionPropietarios}) => {
       identificacion: "",
       nombre: "",
       direccion: "",
-      tipoPropietario: ""
+      naturaleza: ""
     })
   };
 
   return (
     <form onSubmit={agregarPropietario}>
-      
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Identificacion:</Label>
         <input
@@ -101,27 +97,25 @@ const FormularioPropietarios = ({guardarInformacionPropietarios}) => {
           required
         />
       </Campo>
-
       <Campo>
         <Label>Tipo propietario:</Label>
         <InputRadio
           type="radio"
-          name="tipoPropietario"
+          name="naturaleza"
           value="persona"
-          checked={tipoPropietario === "persona"}
+          checked={naturaleza === "persona"}
           onChange={obtenerInformacion}
         />
         Persona
         <InputRadio
           type="radio"
-          name="tipoPropietario"
+          name="naturaleza"
           value="empresa"
-          checked={tipoPropietario === "empresa"}
+          checked={naturaleza === "empresa"}
           onChange={obtenerInformacion}
         />
         Empresa
       </Campo>
-
       <Boton type="submit">Guardar informacion del Propietario</Boton>
     </form>
   );

@@ -3,8 +3,10 @@ const { Schema } = mongoose;
 
 const VehiculosSchema = new Schema({
     placa: { type: String },
-    tipoVehiculo: { type: String }
-},
-    { timestamps: { createdAt: true, updatedAt: true } })
+    tipoVehiculo: { type: String },
+    marca: {type: String},
+    fechaMatricula: {type: Date},
+    propietario: {type: String}
+})
 
 module.exports = mongoose.model("vehiculos", VehiculosSchema)

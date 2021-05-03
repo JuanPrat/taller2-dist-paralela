@@ -33,21 +33,19 @@ const Boton = styled.button`
   }
 `;
 
-const FormularioInfracciones = ({guardarInformacionInfracciones}) => {
+const FormularioInfracciones = ({ guardarInformacionInfracciones }) => {
 
   const [datos, guardarDatos] = useState({
-    fechaInfraccion: "",
-    placaDelVehiculo: "",
-    identificacionPropietario: "",
-    descripcionCorta:"",
+    _id: "",
+    fecha: "",
+    placa: "",
     tipoAgente: "",
   });
 
   const {
-    fechaInfraccion,
-    placaDelVehiculo,
-    identificacionPropietario,
-    descripcionCorta,
+    _id,
+    fecha,
+    placa,
     tipoAgente,
   } = datos;
 
@@ -58,33 +56,29 @@ const FormularioInfracciones = ({guardarInformacionInfracciones}) => {
     });
   };
 
-  
-
   const agregarInfraccion = (e) => {
     e.preventDefault();
 
     guardarInformacionInfracciones(datos);
-    
+
     //Reiniciar el from
     guardarDatos({
-      fechaInfraccion: "",
-    placaDelVehiculo: "",
-    identificacionPropietario: "",
-    descripcionCorta:"",
-    tipoAgente: ""
+      fecha: "",
+      placa: "",
+      tipoAgente: ""
     })
   };
 
   return (
     <form onSubmit={agregarInfraccion}>
-      
+
       <Campo className="row">
         <Label className="col-sm-2 col-form-label">Fecha de infraccion:</Label>
         <input
           className="col-3"
           type="date"
-          name="fechaInfraccion"
-          value={fechaInfraccion}
+          name="fecha"
+          value={fecha}
           onChange={obtenerInformacion}
           required
         />
@@ -92,32 +86,12 @@ const FormularioInfracciones = ({guardarInformacionInfracciones}) => {
         <input
           className="col-3"
           type="text"
-          name="placaDelVehiculo"
-          value={placaDelVehiculo}
+          name="placa"
+          value={placa}
           onChange={obtenerInformacion}
           required
         />
       </Campo>
-      <Campo className="row">
-        <Label className="col-sm-2 col-form-label">Identificacion del propietario:</Label>
-        <input className="col-3"
-          type="text"
-          name="identificacionPropietario"
-          value={identificacionPropietario}
-          onChange={obtenerInformacion}
-          required
-        />
-        <Label className="col-sm-2 col-form-label">Descripcion Corta:</Label>
-        <input
-          className="col-3"
-          type="text"
-          name="descripcionCorta"
-          value={descripcionCorta}
-          onChange={obtenerInformacion}
-          required
-        />
-      </Campo>
-
       <Campo>
         <Label>Tipo de Agente</Label>
         <InputRadio

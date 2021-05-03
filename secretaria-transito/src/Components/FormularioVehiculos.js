@@ -36,17 +36,15 @@ const Boton = styled.button`
 
 
 const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
-
-
-  const [datos, guardarDatos] = useState({
+  const [datos, guardarDatos] = useState([{
       placa: '',
       marca: '',
-      fecha: '',
+      fechaMatricula: '',
       propietario: '',
       tipoVehiculo: ''
-  });
+  }]);
 
-  const { placa, marca, fecha, propietario, tipoVehiculo } = datos;
+  const { placa, marca, fechaMatricula, propietario, tipoVehiculo } = datos;
 
   const obtenerInformacion = (e) => {
     guardarDatos({
@@ -57,7 +55,6 @@ const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
 
   const agregarVehiculo = (e) => {
     e.preventDefault();
-    debugger
     guardarInformacionVehiculo(datos);
   };
 
@@ -89,7 +86,7 @@ const FormularioVehiculos = ({guardarInformacionVehiculo}) => {
         <input className="col-3"
           type="date"
           name="fecha"
-          value={fecha}
+          value={fechaMatricula}
           onChange={obtenerInformacion}
           required
         />

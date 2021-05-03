@@ -20,8 +20,8 @@ server.get("/api/obtenerVehiculo/:placa", async (req, res) => {
 })
 
 server.post("/api/guardarVehiculo/", async (req, res) => {
-    const { placa, tipoVehiculo } = req.body
-    let vehiculoGuardado = await Vehiculos.create({ placa: placa, tipoVehiculo: tipoVehiculo })
+    const { placa, tipoVehiculo, marca: marca, fechaMatricula: fechaMatricula, propietario: propietario } = req.body
+    let vehiculoGuardado = await Vehiculos.create({ placa: placa, tipoVehiculo: tipoVehiculo, marca: marca, fechaMatricula:  fechaMatricula, propietario: propietario })
     return res.send({ data: vehiculoGuardado })
 })
 
@@ -38,9 +38,9 @@ server.get("/api/obtenerInfraccion/:id", async (req, res) => {
     return res.send({ data: infraccion })
 })
 
-server.post("/api/guardarinfraccion/", async (req, res) => {
+server.post("/api/guardarInfraccion/", async (req, res) => {
     const { fecha, tipoAgente, placa } = req.body
-    let infraccionGuardada = await Vehiculos.create({
+    let infraccionGuardada = await Infracciones.create({
         fecha: fecha,
         tipoAgente: tipoAgente,
         placa: placa
@@ -62,7 +62,7 @@ server.get("/api/obtenerPropietario/:identificacion", async (req, res) => {
 
 server.post("/api/guardarPropietario/", async (req, res) => {
     const { nombre, identificacion, direccion, naturaleza } = req.body
-    let propietarioGuardado = await Vehiculos.create({
+    let propietarioGuardado = await Propietarios.create({
         nombre: nombre,
         identificacion: identificacion,
         direccion: direccion,
@@ -71,27 +71,5 @@ server.post("/api/guardarPropietario/", async (req, res) => {
     return res.send({ data: propietarioGuardado })
 })
 
-//ENDPOINTS MATRICULAS
-server.get("/api/obtenerMatriculas", async (req, res) => {
-    let matriculas = await Matriculas.find()
-    return res.send({ data: matriculas })
-})
-
-server.get("/api/obtenerMatricula/:id", async (req, res) => {
-    const { id } = req.params;
-    let matricula = await Matriculas.find({ id: { $regex: new RegExp(id, "i") } })
-    return res.send({ data: matricula })
-})
-
-server.post("/api/guardarMatricula/", async (req, res) => {
-    const { placa, marca, fechaMatricula, propietario } = req.body
-    let matriculaGuardada = await Matriculas.create({
-        placa: placa,
-        marca: marca,
-        fechaMatricula: fechaMatricula,
-        propietario: propietario
-    })
-    return res.send({ data: matriculaGuardada })
-})
 module.exports = server;
 
